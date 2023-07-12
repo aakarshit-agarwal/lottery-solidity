@@ -57,4 +57,16 @@ describe('Lottery Contract', () => {
         assert.equal(accounts[2], players[2]);
         assert.equal(3, players.length);
     });
+
+    it('requires minimum `0.1` ether to add player', async () => {
+        try {
+            await lottery.methods.addPlayer().send({
+                from: accounts[0],
+                value: web3.utils.toWei('0.002', 'ether'),
+            });
+            assert(false);
+        } catch (error) {
+            assert(error);
+        }
+    });
 });
